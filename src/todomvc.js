@@ -5,7 +5,10 @@
  *Git: https://github.com/wontstop
  *Address: No.4800, Caoan Road, Jiading District, Tongji University, Shanghai, China.
  */
+
+// Count of items not completed
 var leftCount = 0;
+// According to the time, generate ID of items
 var time = new Date();
 var ID = 'todo' +
     time.getYear().toString() +
@@ -27,6 +30,7 @@ function $$$(selector) {
     return document.querySelectorAll(selector);
 }
 
+// Call function of input box
 function addItem() {
     var todo = $('todoinput');
     if (todo.value === '')
@@ -36,6 +40,7 @@ function addItem() {
     todo.value = '';
 }
 
+// Make items as completed
 function deleteToDo(e) {
     var todo;
     for (var i = 0; i < localStorage.length; i++) {
@@ -46,7 +51,7 @@ function deleteToDo(e) {
     update();
 }
 
-
+// Reedit the items
 function editToDo(event) {
     var tar = event.target;
     var box = document.createElement('input');
@@ -70,7 +75,7 @@ function editToDo(event) {
     tar.parentNode.replaceChild(box, tar);
 }
 
-
+// Change the filter state
 function filter(e) {
     var filters = $$$("#filters li");
     for (var i = 0; i < 3; i++) {
@@ -80,6 +85,7 @@ function filter(e) {
     update();
 }
 
+// Entrance of the project, init the event listener
 function init() {
     $("add").addEventListener("click", addItem);
     $('todoinput').addEventListener("keyup", function (event) {
@@ -89,10 +95,12 @@ function init() {
 
     //Set filter
     var filters = $$$('#filters li');
+    // forEach may not work in some browsers
     filters.forEach(function (t) {
         t.addEventListener('click', filter);
     });
 
+    // Set clear function
     var clear = $('clear');
     clear.addEventListener('click', function () {
         for (var i = 0; i < localStorage.length; i++) {
@@ -105,7 +113,9 @@ function init() {
         update();
     });
 
+    // Set mark function
     $('mark').addEventListener('click',function(){
+        // When user load the page first time, we should init the param
         if(localStorage.getItem('mark') === null){
             localStorage.setItem('mark',true);
         }
@@ -119,27 +129,28 @@ function init() {
         localStorage.setItem('mark',mark === 'false');
         update();
     });
-
-    //init the page
+    // Flush the page
     update();
 }
+
+// Add the items to page according to message and status
 function addToDo(message, completed) {
     var list = $('list');
     var left = $('left');
 
-    //init imark
+    //Add imark div
     var imark = document.createElement('div');
     imark.classList.add('imark');
     imark.innerText = '>';
     imark.addEventListener('click', deleteToDo);
 
-    //init icontent
+    //Add icontent div
     var icontent = document.createElement('div');
     icontent.classList.add('icontent');
     icontent.innerText = message;
     icontent.addEventListener('dblclick', editToDo);
 
-    //init del
+    //Add del div
     var del = document.createElement('button');
     del.classList.add('del');
     del.innerText = 'x';
@@ -155,9 +166,10 @@ function addToDo(message, completed) {
         update();
     });
 
-    //init item
+    //Add item div
     var item = document.createElement('div');
     item.classList.add('item');
+    // Change the appearance
     if (completed) {
         item.classList.add('completed');
         item.style.display = localStorage.getItem('display') === '1' ? 'none' : 'block';
@@ -165,31 +177,34 @@ function addToDo(message, completed) {
     else {
         item.style.display = localStorage.getItem('display') === '2' ? 'none' : 'block';
     }
-
     item.appendChild(imark);
     item.appendChild(icontent);
     item.appendChild(del);
     list.insertBefore(item, list.firstChild);
 
+    //update the reminder
     left.innerText = (leftCount === 0 ? 'No' : leftCount.toString()) + ' ' + 'items left';
 }
 
-/*Date Base Update*/
+//Add item to database
 function addLocal(msg, completed) {
     var todo = {
         message: msg,
         status: completed
     };
     totalCount++;
+    // Make the count to 3 digits
     var str = '000'+totalCount.toString();
     localStorage.setItem(ID + str.substr(str.length-3), JSON.stringify(todo));
 }
 
+// Get data from database, get an object
 function readLocal(i) {
     var key = localStorage.key(i);
     return key.startsWith('todo') ? JSON.parse(localStorage.getItem(key)) : null;
 }
 
+// Update data in database
 function updateLocal(key, msg, completed) {
     var todo = {
         message: msg,
@@ -198,15 +213,18 @@ function updateLocal(key, msg, completed) {
     localStorage.setItem(key, JSON.stringify(todo));
 }
 
+//Delete data from database
 function removeLocal(key) {
     localStorage.removeItem(key);
 }
 
+//Update the whole page
 function update() {
+    //Clear the list
     $('list').innerHTML = '';
 
     leftCount = 0;
-
+    //Init the display param
     if (localStorage.getItem('display') === null) {
         localStorage.setItem('display', '0');
     }
@@ -214,6 +232,7 @@ function update() {
     $$("#filters .filter-choose").classList.remove('filter-choose');
     $$$('#filters li')[localStorage.getItem('display')].classList.add('filter-choose');
 
+    // Add all the items to page
     for (var i = 0; i < localStorage.length; i++) {
         var todo = readLocal(i);
         if (todo !== null) {
