@@ -1,0 +1,120 @@
+/**
+*By Yongxun Li(Charles.li)
+*Mail: liyongxun@foxmail.com
+*Phone: (+86) 18221193236
+*Git: https://github.com/wontstop
+*Address: No.4800, Caoan Road, Jiading District, Tongji University, Shanghai, China.
+*/
+
+#content {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.big, #add {
+    font-family: "Microsoft JhengHei", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+}
+
+.big {
+    width: 25em;
+    padding: 0.5em 1em;
+}
+
+.bigedit {
+    font-family: "Microsoft JhengHei", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+    width: 30em;
+    padding: 0.5em 1em;
+}
+
+#add {
+    padding: 0.5em 2em;
+}
+
+#list {
+    display: inline;
+    text-align: left;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #bbbbbb;
+}
+
+.item {
+    vertical-align: middle;
+    border-bottom: solid 1px #aaaaaa;
+}
+
+.item:hover {
+    background-color: #dddddd;
+}
+
+.item div, .del {
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+.item button {
+    width: 1em;
+    padding: 0 0;
+}
+
+.imark {
+    color: #aaaaaa;
+    text-decoration: inherit;
+}
+
+.icontent {
+    width: 30em;
+    padding: 0.5em 1em;
+    text-decoration: inherit;
+}
+
+.del {
+    border: none;
+    background-color: transparent;
+    visibility: visible;
+}
+
+.del:hover {
+    color: red;
+}
+
+#operation {
+    text-align: center;
+}
+
+#left, #filters, #clear, #mark {
+    color: #666666;
+    display: inline-block;
+    padding: 0;
+}
+
+#left {
+    text-align: left;
+    padding-right: 2em;
+}
+
+#clear {
+    text-align: right;
+    padding-left: 2em;
+}
+
+#filters li {
+    display: inline-block;
+    color: #aaaaaa;
+    width: 7em;
+    border-radius: 3px;
+    background-color: #cccccc;
+    text-align: center;
+}
+
+.imark, #filters li:hover, #clear:hover, #mark:hover {
+    cursor: pointer;
+}
+
+#filters li.filter-choose {
+    background-color: #88ff88;
+}
